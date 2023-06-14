@@ -34,7 +34,19 @@ typedef struct uTest_s {
   __time_t    u64_stop_Time;
 } uTest_t;
 
-typedef void (*uTest_fn_ptr)(void); // Expected function for Declare a Section Test
+typedef struct uTest_Module_s {
+  char const *str_TestFnName; // Test (Module or Section) Name
+  char const *str_TestFnDesc; // Test Function Description *Optional*
+} uTest_Module_t;
+
+typedef struct uTest_Status_s {
+  uint32_t u32_TestTotal; // Test Fn (Modules) Cases Counter
+  uint32_t u32_TestFails; // Test Fn (Modules) Failed Counter
+} uTest_Status_t;
+
+typedef uTest_Status_t *uTest_St_handle_t;
+
+typedef void (*uTest_fn_ptr)(uTest_St_handle_t); // Expected function for Declare a Section Test
 
 // Handle for uTest
 typedef uTest_t *uTest_handle_t;
