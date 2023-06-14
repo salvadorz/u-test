@@ -17,6 +17,10 @@ extern "C" {
 
 #define SEND_OUT() fflush(stdout)
 
+#define uTEST_PRINT(msg, ...) \
+  printf(msg, ##_VA_ARGS__);  \
+  SEND_OUT()
+
 #ifndef PASS
   #define PASS (0U)
 #endif
