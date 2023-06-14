@@ -34,7 +34,11 @@ typedef struct uTest_s {
   __time_t    u64_stop_Time;
 } uTest_t;
 
-typedef void (*uTest_fn_ptr)(void);  // Expected function for Declare a Section Test
+typedef void (*uTest_fn_ptr)(void); // Expected function for Declare a Section Test
+
+// Handle for uTest
+typedef uTest_t *uTest_handle_t;
+
 #ifdef __cplusplus
 }
 #endif
