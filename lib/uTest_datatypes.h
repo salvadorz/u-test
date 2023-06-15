@@ -21,35 +21,24 @@ extern "C" {
   #include "utils_common.h"
 #endif
 
+typedef void (*uTest_fn_ptr)(void); // Expected function for Declare a Section Test
+
 typedef struct uTest_s {
-  char const *str_TestFile;   // Test File Name (*.c)
-  char const *str_TestFnName; // Test (Section) Name
-  char const *str_TestFnDesc; // Test Function Description *Optional*
-  uint32_t    u32_TestFnLine; // Line Number for Report printing
-  uint32_t    u32_TestMCases; // Test Fn (Modules) Cases Counter
-  uint32_t    u32_TestMFails; // Test Fn (Modules) Failed Counter
-  uint32_t    u32_TestCCases; // Assertions expected in Current Section Counter
-  uint32_t    u32_TestCFails; // Assertions Failed in Current Section Counter
-  __time_t    u64_start_Time; // Init time-stamp
-  __time_t    u64_stop_Time;
+  char const *str_uTestFile;   // Test File Name (*.c)
+  char const *str_uTestFnName; // Test (Section) Name
+  char const *str_uTestFnDesc; // Test Function Description *Optional*
+  uint32_t    u32_uTestFnLine; // Line Number for Report printing
+  uint32_t    u32_uTestTCases; // Test Fn Total Section Cases Counter
+  uint32_t    u32_uTestTFails; // Test Fn Total Section Failed Counter
+  uint32_t    u32_uTestCCases; // Assertions expected in Current Section Counter
+  uint32_t    u32_uTestCFails; // Assertions Failed in Current Section Counter
+  __time_t    u64_start_Time;  // Init time-stamp
+  __time_t    u64_stop_Time;   // close time-stamp
 } uTest_t;
-
-typedef struct uTest_Status_s {
-  uint32_t u32_TestTotal; // Test Fn (Modules) Cases Counter
-  uint32_t u32_TestFails; // Test Fn (Modules) Failed Counter
-} uTest_Status_t;
-
-typedef uTest_Status_t *uTest_St_handle_t;
-
-typedef void (*uTest_fn_ptr)(uTest_St_handle_t); // Expected function for Declare a Section Test
 
 // Handle for uTest
 typedef uTest_t *uTest_handle_t;
 
-typedef struct uTest_Module_s {
-  uTest_fn_ptr fn;
-  char const *str_ModuleName; // Test Function Name
-} uTest_Module_t;
 
 #ifdef __cplusplus
 }
