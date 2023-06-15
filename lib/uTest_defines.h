@@ -43,6 +43,13 @@ extern "C" {
   #define RUN_uTEST_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
 #endif
 
+#define TEST_ASSERT_EQUAL_VAL(expected, actual) uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_VAL_MSG(expected, actual, msg) \
+  uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, msg)
+
+#define uTEST_ASSERT_EQUAL_VAL(expected, actual, line, message) \
+  uTest_assert_expected_val((expected), (actual), (message), (line))
+
 #if !(uTST_SET_ENV_TEST_CFG)
   #undef uTST_SET_ENV_TEST_CFG
 #endif
