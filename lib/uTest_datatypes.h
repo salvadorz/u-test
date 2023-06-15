@@ -39,6 +39,7 @@ typedef struct uTest_s {
 // Handle for uTest
 typedef uTest_t *uTest_handle_t;
 
+typedef uint8_t uT_Rtn_t;
 
 #ifdef __cplusplus
 }
