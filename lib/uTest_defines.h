@@ -16,6 +16,10 @@ extern "C" {
 // Includes
 #include "uTest_common.h"
 
+/** Utils-Test Macro configuration to enable/disable features */
+#define uTST_FORMAT_COLOR_CFG (ENABLE)  // ENABLE/DISABLE the COLOR OUTPUT FORMAT
+#define uTST_SET_ENV_TEST_CFG (DISABLE) // ENABLE/DISABLE the PRE and POST RUN functions to set the env test
+
 /**
  * \brief    Initializes/clears the uTest global variable and assigns the File_UT name
  * \param    NONE, the file name is passed automagically
@@ -39,6 +43,14 @@ extern "C" {
   #define RUN_uTEST_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
 #endif
 
+#if !(uTST_SET_ENV_TEST_CFG)
+  #undef uTST_SET_ENV_TEST_CFG
+#endif
+
+#if !(uTST_FORMAT_COLOR_CFG)
+  #undef uTST_FORMAT_COLOR_CFG
+#endif
+
 /*****************************************************************************************************
  * Definition of TEST STRING MACROs
  *****************************************************************************************************/
@@ -54,6 +66,7 @@ extern "C" {
 #define TST_WRONG_MARK      "\u2718"
 
 // Set format
+#ifdef  uTST_FORMAT_COLOR_CFG
 #define TST_FRMT_RESETN     "\e[0m"
 #define TST_FRMT_BOLD_T     "\e[1m"
 #define TST_FRMT_FAINTT     "\e[2m"
@@ -92,6 +105,49 @@ extern "C" {
 #define TST_FRMT_B_LMGNT    "\e[105m"
 #define TST_FRMT_B_LCYAN    "\e[106m"
 #define TST_FRMT_B_WHITE    "\e[107m"
+
+#else
+#define TST_FRMT_RESETN  
+#define TST_FRMT_BOLD_T  
+#define TST_FRMT_FAINTT  
+#define TST_FRMT_ITALIC  
+#define TST_FRMT_UNDERL  
+#define TST_FRMT_BLINKL  
+// Foreground
+#define TST_FRMT_F_BLCK  
+#define TST_FRMT_F_RED   
+#define TST_FRMT_F_GRN   
+#define TST_FRMT_F_YLLW  
+#define TST_FRMT_F_BLUE  
+#define TST_FRMT_F_MGNT  
+#define TST_FRMT_F_CYAN  
+#define TST_FRMT_F_GRAY  
+#define TST_FRMT_F_LGRY  
+#define TST_FRMT_F_LRED  
+#define TST_FRMT_F_LGRN  
+#define TST_FRMT_F_LYLLW 
+#define TST_FRMT_F_LBLUE 
+#define TST_FRMT_F_LMGNT 
+#define TST_FRMT_F_LCYAN 
+#define TST_FRMT_F_WHITE 
+// Background
+#define TST_FRMT_B_BLCK  
+#define TST_FRMT_B_RED   
+#define TST_FRMT_B_GRN   
+#define TST_FRMT_B_YLLW  
+#define TST_FRMT_B_BLUE  
+#define TST_FRMT_B_MGNT  
+#define TST_FRMT_B_CYAN  
+#define TST_FRMT_B_GRAY  
+#define TST_FRMT_B_LGRY  
+#define TST_FRMT_B_LRED  
+#define TST_FRMT_B_LGRN  
+#define TST_FRMT_B_LYLLW 
+#define TST_FRMT_B_LBLUE 
+#define TST_FRMT_B_LMGNT 
+#define TST_FRMT_B_LCYAN 
+#define TST_FRMT_B_WHITE 
+#endif
 
 #define TST_FRMT_FAIL     TST_FRMT_F_LRED TST_FRMT_ITALIC TST_FRMT_UNDERL
 #define TST_FRM_LN_BRKR_O TST_FRMT_BOLD_T TST_FRMT_UNDERL TST_FRMT_F_LCYAN TST_STR_BRKR

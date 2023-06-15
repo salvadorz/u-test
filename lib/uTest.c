@@ -31,7 +31,6 @@
  */
 
 #include "uTest.h"
-#include "uTest_common.h"
 
 #include <stdbool.h>
 #include <stdio.h>  // uTEST_PRINT
