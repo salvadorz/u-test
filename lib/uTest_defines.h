@@ -44,6 +44,8 @@ extern "C" {
  *****************************************************************************************************/
 
 // clang-format off
+#define TST_STR_OK          " OK "
+#define TST_STR_NACK        "NOT OK"
 #define TST_STR_PASS        "PASS"
 #define TST_STR_FAIL        "FAIL"
 #define TST_STR_BRKR        "------------------------------------------"

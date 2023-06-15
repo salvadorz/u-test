@@ -33,6 +33,7 @@
 #include "uTest.h"
 #include "uTest_common.h"
 
+#include <stdbool.h>
 #include <stdio.h>  // uTEST_PRINT
 #include <string.h> // memset
 #include <time.h>   // time
@@ -96,6 +97,23 @@ uint32_t uTest_end(void) {
   return uTst_g.u32_uTestTFails;
 }
 
+void uTest_check(void) {
+  bool const any_fail = (0 == uTst_g.u32_uTestCFails) ? false : true;
+  if (false == any_fail) {
+    uTest_results(uTst_g.str_uTestFile, uTst_g.u32_uTestFnLine, false);
+    uTEST_PRINT("\n");
+  } else {
+    ++uTst_g.u32_uTestTFails;
+  }
+  uint32_t const cTestPassed = uTst_g.u32_uTestCCases - uTst_g.u32_uTestCFails;
+
+  uTEST_PRINT("- %s total:%3d pass:%3d - Test Name: %s\n", any_fail ? brckt_nak : dbrckt_ok,
+              uTst_g.u32_uTestCCases, cTestPassed, uTst_g.str_uTestFnDesc);
+  uTst_g.u32_uTestCCases = 0;
+  uTst_g.u32_uTestCFails = 0;
+  uTst_g.str_uTestFnDesc = NULL;
+}
+
 uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg) {
   uT_Rtn_t exec_ok = uTEST_OK;
 
@@ -112,6 +130,7 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
     fnTst();
     uTEST_POST_RUN();
 
+    uTest_check();
     // @TODO Conclude Test to see if any failure
   } else {
     exec_ok = uTEST_NOT_OK;
