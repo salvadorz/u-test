@@ -30,7 +30,7 @@ typedef struct uTest_s {
   uint32_t    u32_TestMFails; // Test Fn (Modules) Failed Counter
   uint32_t    u32_TestCCases; // Assertions expected in Current Section Counter
   uint32_t    u32_TestCFails; // Assertions Failed in Current Section Counter
-  __time_t    u64_strat_Time; // Init time-stamp
+  __time_t    u64_start_Time; // Init time-stamp
   __time_t    u64_stop_Time;
 } uTest_t;
 

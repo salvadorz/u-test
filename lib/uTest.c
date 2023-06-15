@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2023 by Salvador Z                                            *
  *                                                                             *
- * This file is part of UTILS_C                                                *
+ * This file is part of Project                                                *
  *                                                                             *
  *   Permission is hereby granted, free of charge, to any person obtaining a   *
  *   copy of this software and associated documentation files (the Software)   *
@@ -23,52 +23,40 @@
  ******************************************************************************/
 
 /**
- * @file uTest.h
+ * @file uTest.c
  * @author Salvador Z
- * @version 1.0
- * @brief File for uTest Generic API
+ * @date 14 Jun 2023
+ * @brief File for uTest Lib Implementation
  *
  */
 
-#ifndef UTEST_H_
-#define UTEST_H_
+#include "uTest.h"
+#include <stdio.h>  // uTEST_PRINT
+#include <string.h> // memset
+#include <time.h>   // time
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod) {
+  uTest_Status_t status;
 
-// Includes
-#include "uTest_common.h"
-#include "uTest_datatypes.h"
-
-// This need to be declare on the runner
-extern uTest_Module_t uTest_modules[];
-
-/**
- * \brief    Initializes the tTest structure
- * \param    tst structure to initialize
- * \param    filename to Start testing
- * \return   0 if sucees, 1 otherwise
- * \todo
- */
-uint8_t uTest_init(uTest_handle_t tst, char const *filename);
-
-/**
- * \brief    Receives a element from the uTest_modules[] and extracts the information
- * \param    tst to populate the info from tst_mod
- * \return   0 if sucees, 1 otherwise
- * \todo
- */
-uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod);
-
-/**
- * \brief    Iterates over uTest_modules
- * \todo
- */
-void uTest_runner(void);
-
-#ifdef __cplusplus
+  uTEST_PRINT("Testing '%s'\n", tst_mod->str_ModuleName);
+  tst_mod->fn(&status);
+  uTEST_PRINT("Result: name:'%s' total:%d fails:%d\n", tst_mod->str_ModuleName, status.u32_TestTotal,
+              status.u32_TestFails);
+  tst->u32_TestCFails += status.u32_TestFails;
+  tst->u32_TestCCases += status.u32_TestTotal;
 }
-#endif
 
-#endif /* UTEST_H_ */
+void uTest_runner(void) {
+  uTest_t         test;
+  uTest_Module_t *tm;
+
+  memset(&test, 0, sizeof(uTest_t));
+  test.u64_start_Time = time(NULL);
+  tm                  = uTest_modules;
+
+  while (tm->str_ModuleName != NULL) {
+    uTest_execute(&test, tm);
+    tm++;
+  }
+  test.u64_stop_Time = time(NULL);
+}
