@@ -48,7 +48,7 @@ extern "C" {
  * \return   0 if success, 1 otherwise
  * \todo
  */
-uT_Rtn_t uTest_init(uTest_handle_t tst, char const *filename);
+uT_Rtn_t uTest_init(char const *filename);
 
 /**
 * \brief    Closes uTest after all tests fn were run and ready to show the report
@@ -56,7 +56,7 @@ uT_Rtn_t uTest_init(uTest_handle_t tst, char const *filename);
 * \return   Returns number of failures detected, 0 if everything no errors
 * \todo
 */
-uint32_t uTest_end(uTest_handle_t tst);
+uint32_t uTest_end(void);
 
 #ifdef __cplusplus
 }

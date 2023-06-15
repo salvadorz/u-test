@@ -31,6 +31,8 @@
  */
 
 #include "uTest.h"
+#include "uTest_common.h"
+
 #include <stdio.h>  // uTEST_PRINT
 #include <string.h> // memset
 #include <time.h>   // time
@@ -58,4 +60,38 @@ static void uTest_footer_report(void) {
   printf("------------------------------------------\n");
 }
 
+uTest_t uTst_g = { 0 };
 
+uT_Rtn_t uTest_init(char const *filename) {
+  uT_Rtn_t exec_ok = uTEST_OK;
+
+  if (filename) {
+
+    memset(&uTst_g, 0, sizeof(uTest_t));
+
+    uTst_g.str_uTestFile  = filename;
+    uTst_g.u64_start_Time = time(NULL);
+
+    uTest_header_report();
+  } else {
+    exec_ok = uTEST_NOT_OK;
+  }
+  return exec_ok;
+}
+
+uint32_t uTest_end(void) {
+
+  // End Time-Stamp
+  uTst_g.u64_stop_Time = time(NULL);
+
+  uint32_t const tst_success = uTst_g.u32_uTestTCases - uTst_g.u32_uTestTFails;
+
+  uTest_footer_report();
+  uTEST_PRINT("Start Time: %s\n", time_string(&uTst_g.u64_start_Time));
+  uTEST_PRINT("End Time:   %s\n", time_string(&uTst_g.u64_stop_Time));
+  uTEST_PRINT("Executed:  %3d \n", uTst_g.u32_uTestTCases);
+  uTEST_PRINT("Sucessful: %3d \n", tst_success);
+  uTEST_PRINT("Test Result: %s\n\n", (uTst_g.u32_uTestTCases == tst_success) ? "PASS" : "FAIL");
+
+  return uTst_g.u32_uTestTFails;
+}

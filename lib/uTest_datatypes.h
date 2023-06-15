@@ -36,9 +36,6 @@ typedef struct uTest_s {
   __time_t    u64_stop_Time;   // close time-stamp
 } uTest_t;
 
-// Handle for uTest
-typedef uTest_t *uTest_handle_t;
-
 typedef uint8_t uT_Rtn_t;
 
 #ifdef __cplusplus
