@@ -31,6 +31,14 @@ extern "C" {
  */
 #define uTEST_END() uTest_end()
 
+/** Macros for Handle uTEST Section Addition*/
+#ifndef ADD_uTEST
+  #define ADD_uTEST_FN(...)                 RUN_uTEST_FN(__VA_ARGS__, __LINE__, discard)
+  #define ADD_uTEST_MSG(...)                RUN_uTEST_MSG(__VA_ARGS__, __LINE__, discard)
+  #define RUN_uTEST_FN(fn, line, msg, ...)  uTest_run(fn, #fn, line, NULL)
+  #define RUN_uTEST_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
+#endif
+
 /*****************************************************************************************************
  * Definition of TEST STRING MACROs
  *****************************************************************************************************/

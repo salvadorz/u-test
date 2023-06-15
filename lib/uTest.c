@@ -95,3 +95,26 @@ uint32_t uTest_end(void) {
 
   return uTst_g.u32_uTestTFails;
 }
+
+uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg) {
+  uT_Rtn_t exec_ok = uTEST_OK;
+
+  if (fnTst && fnName && line) {
+    uTst_g.str_uTestFnName = fnName;
+    uTst_g.u32_uTestFnLine = line;
+    uTst_g.u32_uTestTCases++;
+
+    if (msg) {
+      uTst_g.str_uTestFnDesc = msg;
+    }
+
+    uTEST_PRE_RUN();
+    fnTst();
+    uTEST_POST_RUN();
+
+    // @TODO Conclude Test to see if any failure
+  } else {
+    exec_ok = uTEST_NOT_OK;
+  }
+  return exec_ok;
+}

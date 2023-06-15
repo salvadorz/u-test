@@ -41,6 +41,14 @@ extern "C" {
 #include "uTest_common.h"
 #include "uTest_datatypes.h"
 
+#ifdef SET_ENV_uTEST_CFG
+  #define uTEST_PRE_RUN()  uTest_pre_run()
+  #define uTEST_POST_RUN() uTest_post_run()
+#else
+  #define uTEST_PRE_RUN()
+  #define uTEST_POST_RUN()
+#endif
+
 /**
  * \brief    Initialize the uTest structure
  * \param    tst structure to initialize
@@ -51,12 +59,23 @@ extern "C" {
 uT_Rtn_t uTest_init(char const *filename);
 
 /**
-* \brief    Closes uTest after all tests fn were run and ready to show the report
-* \param    tst - uTest structure to obtain the results
-* \return   Returns number of failures detected, 0 if everything no errors
-* \todo
-*/
+ * \brief    Closes uTest after all tests fn were run and ready to show the report
+ * \param    tst - uTest structure to obtain the results
+ * \return   Returns number of failures detected, 0 if everything no errors
+ * \todo
+ */
 uint32_t uTest_end(void);
+
+/**
+ * \brief    Description...
+ * \param    fnTst to Call
+ * \param    fnName to register in global structure
+ * \param    line to register in global structure
+ * \param    msg to print out in the report **optional**
+ * \return   0 if success, 1 otherwise
+ * \todo
+ */
+uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg);
 
 #ifdef __cplusplus
 }
