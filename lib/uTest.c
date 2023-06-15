@@ -63,6 +63,11 @@ static void uTest_footer_report(void) {
 
 uTest_t uTst_g = { 0 };
 
+static void uTest_results(char const *file, uint32_t const line, bool failed) {
+
+  uTEST_PRINT("%s:%d:%s%s", file, line, uTst_g.str_uTestFnName, failed ? fail_mark : pass_mark);
+}
+
 uT_Rtn_t uTest_init(char const *filename) {
   uT_Rtn_t exec_ok = uTEST_OK;
 
