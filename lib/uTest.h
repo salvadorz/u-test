@@ -42,7 +42,7 @@ extern "C" {
 #include "uTest_datatypes.h"
 #include "uTest_defines.h"
 
-#ifdef SET_ENV_uTEST_CFG
+#ifdef uTST_SET_ENV_TEST_CFG
   #define uTEST_PRE_RUN()  uTest_pre_run()
   #define uTEST_POST_RUN() uTest_post_run()
 #else
@@ -77,6 +77,17 @@ uint32_t uTest_end(void);
  * \todo
  */
 uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg);
+
+/**
+* \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
+* \param    expected - value to compare
+* \param    actual - value provided from the test
+* \param    msg - If a msg is provided will be printed if the comparison fails
+* \param    line - prints the line number where the assertion failed.
+* \return   NONE
+* \todo     Cancel current section in progress
+*/
+void uTest_assert_expected_val(int32_t const expected, int32_t const actual, char const *msg, uint32_t line);
 
 /**
  * \brief    Function to set any (global) variables or any environment setup prior to call

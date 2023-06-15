@@ -152,3 +152,23 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
   }
   return exec_ok;
 }
+
+void uTest_assert_expected_val(int32_t const expected, int32_t const actual, char const *msg, uint32_t line) {
+  ++uTst_g.u32_uTestCCases;
+
+  if (expected != actual) {
+    // Print report
+    uTest_results(uTst_g.str_uTestFile, line, true);
+    uTEST_PRINT(" - Expected %d was %d.", expected, actual);
+
+    if (NULL != msg) {
+      uTEST_PRINT("%s \n", msg);
+    } else {
+      uTEST_PRINT("\n");
+    }
+    ++uTst_g.u32_uTestCFails;
+
+    // @TODO Cancel current section
+    return // for now
+  }
+}
