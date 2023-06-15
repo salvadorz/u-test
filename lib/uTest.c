@@ -44,6 +44,20 @@ char *time_string(time_t *t) {
   return date_time;
 }
 
+static void uTest_header_report(void) {
+  printf("\n");
+  printf("------------------------------------------\n");
+  printf("        uTest Unit Test Framework         \n");
+  printf("------------------------------------------\n");
+}
+
+static void uTest_footer_report(void) {
+  printf("\n");
+  printf("------------------------------------------\n");
+  printf("                Test Report               \n");
+  printf("------------------------------------------\n");
+}
+
 uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod) {
   uTest_Status_t status;
 
