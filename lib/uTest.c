@@ -58,28 +58,4 @@ static void uTest_footer_report(void) {
   printf("------------------------------------------\n");
 }
 
-uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod) {
-  uTest_Status_t status;
 
-  uTEST_PRINT("Testing '%s'\n", tst_mod->str_ModuleName);
-  tst_mod->fn(&status);
-  uTEST_PRINT("Result: name:'%s' total:%d fails:%d\n", tst_mod->str_ModuleName, status.u32_TestTotal,
-              status.u32_TestFails);
-  tst->u32_TestCFails += status.u32_TestFails;
-  tst->u32_TestCCases += status.u32_TestTotal;
-}
-
-void uTest_runner(void) {
-  uTest_t         test;
-  uTest_Module_t *tm;
-
-  memset(&test, 0, sizeof(uTest_t));
-  test.u64_start_Time = time(NULL);
-  tm                  = uTest_modules;
-
-  while (tm->str_ModuleName != NULL) {
-    uTest_execute(&test, tm);
-    tm++;
-  }
-  test.u64_stop_Time = time(NULL);
-}

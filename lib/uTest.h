@@ -41,9 +41,6 @@ extern "C" {
 #include "uTest_common.h"
 #include "uTest_datatypes.h"
 
-// This need to be declare on the runner
-extern uTest_Module_t uTest_modules[];
-
 /**
  * \brief    Initializes the tTest structure
  * \param    tst structure to initialize
@@ -53,19 +50,7 @@ extern uTest_Module_t uTest_modules[];
  */
 uint8_t uTest_init(uTest_handle_t tst, char const *filename);
 
-/**
- * \brief    Receives a element from the uTest_modules[] and extracts the information
- * \param    tst to populate the info from tst_mod
- * \return   0 if sucees, 1 otherwise
- * \todo
- */
-uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod);
 
-/**
- * \brief    Iterates over uTest_modules
- * \todo
- */
-void uTest_runner(void);
 
 #ifdef __cplusplus
 }
