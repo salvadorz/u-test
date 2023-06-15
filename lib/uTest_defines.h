@@ -20,21 +20,6 @@ extern "C" {
 #define uTST_FORMAT_COLOR_CFG (ENABLE)  // ENABLE/DISABLE the COLOR OUTPUT FORMAT
 #define uTST_SET_ENV_TEST_CFG (DISABLE) // ENABLE/DISABLE the PRE and POST RUN functions to set the env test
 
-/**
- * \brief    Initializes/clears the uTest global variable and assigns the File_UT name
- * \param    NONE, the file name is passed automagically
- * \return   OK if success, NOT_OK otherwise
- * \todo
- */
-#define uTEST_INIT() uTest_init(__FILE__)
-
-/**
- * \brief    Provides the Test Summary and closes the uTest File_UT name
- * \return   The number of Section failures
- * \todo
- */
-#define uTEST_END() uTest_end()
-
 /** Macros for Handle uTEST Section Addition*/
 #ifndef ADD_uTEST
   #define ADD_uTEST_FN(...)                 RUN_uTEST_FN(__VA_ARGS__, __LINE__, discard)
@@ -51,6 +36,18 @@ extern "C" {
   uTest_assert_expected_val((expected), (actual), (message), (line))
 
 #define uTST_ABORT() return
+
+#define uTST_RETURN_IF_FAIL_         \
+  do {                               \
+    if (utils_test.u32_TstCFailed) { \
+      uTST_ABORT();                  \
+    }                                \
+  } while (0)
+
+#define uTEST_ASSERT_EXPECTED(x, y)                  \
+  do {                                               \
+    if (x != y) uTest_assert_fail(#x, #y, __LINE__); \
+  } while (0)
 
 #if !(uTST_SET_ENV_TEST_CFG)
   #undef uTST_SET_ENV_TEST_CFG

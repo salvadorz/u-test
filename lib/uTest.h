@@ -51,6 +51,21 @@ extern "C" {
 #endif
 
 /**
+ * \brief    Initializes/clears the uTest global variable and assigns the File_UT name
+ * \param    NONE, the file name is passed automagically
+ * \return   OK if success, NOT_OK otherwise
+ * \todo
+ */
+#define uTEST_INIT() uTest_init(__FILE__)
+
+/**
+ * \brief    Provides the Test Summary and closes the uTest File_UT name
+ * \return   The number of Section failures
+ * \todo
+ */
+#define uTEST_END() uTest_end()
+
+/**
  * \brief    Initialize the uTest structure
  * \param    tst structure to initialize
  * \param    filename to Start testing
@@ -79,14 +94,14 @@ uint32_t uTest_end(void);
 uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg);
 
 /**
-* \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
-* \param    expected - value to compare
-* \param    actual - value provided from the test
-* \param    msg - If a msg is provided will be printed if the comparison fails
-* \param    line - prints the line number where the assertion failed.
-* \return   NONE
-* \todo     Cancel current section in progress
-*/
+ * \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
+ * \param    expected - value to compare
+ * \param    actual - value provided from the test
+ * \param    msg - If a msg is provided will be printed if the comparison fails
+ * \param    line - prints the line number where the assertion failed.
+ * \return   NONE
+ * \todo     Cancel current section in progress
+ */
 void uTest_assert_expected_val(int32_t const expected, int32_t const actual, char const *msg, uint32_t line);
 
 /**
