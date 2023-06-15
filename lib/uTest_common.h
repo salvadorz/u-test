@@ -21,6 +21,14 @@ extern "C" {
   printf(msg, ##__VA_ARGS__); \
   SEND_OUT()
 
+#ifndef uTEST_OK
+  #define uTEST_OK (0U)
+#endif
+
+#ifndef uTEST_NOT_OK
+  #define uTEST_NOT_OK (1U)
+#endif
+
 #ifndef PASS
   #define PASS (0U)
 #endif
