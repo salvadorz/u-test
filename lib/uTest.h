@@ -40,6 +40,7 @@ extern "C" {
 // Includes
 #include "uTest_common.h"
 #include "uTest_datatypes.h"
+#include "uTest_defines.h"
 
 #ifdef SET_ENV_uTEST_CFG
   #define uTEST_PRE_RUN()  uTest_pre_run()

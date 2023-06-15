@@ -40,6 +40,17 @@
 
 #define DATE_TIME_STR_LEN 64
 
+const char fail_mark[] = TST_FRMT_FAIL TST_WRONG_MARK TST_WRONG_MARK TST_FRMT_RESETN;
+const char fail_text[] = TST_FRMT_UNDERL TST_FRMT_F_RED TST_STR_FAIL TST_FRMT_RESETN;
+
+const char pass_mark[] = TST_FRMT_F_LGRN TST_CHECK_MARK TST_CHECK_MARK TST_FRMT_RESETN;
+const char pass_text[] = TST_FRMT_F_LGRN TST_STR_PASS TST_FRMT_RESETN;
+
+const char dbrckt_ok[] = TST_FRMT_F_YLLW "[[" TST_FRMT_F_LGRN TST_STR_OK TST_FRMT_F_YLLW "]]" TST_FRMT_RESETN;
+const char brckt_nak[] = TST_FRMT_F_YLLW "[" TST_FRMT_F_RED TST_STR_NACK TST_FRMT_F_YLLW "]" TST_FRMT_RESETN;
+const char line_brkO[] = TST_FRM_LN_BRKR_O TST_FRMT_RESETN;
+const char line_brkI[] = TST_FRM_LN_BRKR_I TST_FRMT_RESETN;
+
 char date_time[DATE_TIME_STR_LEN];
 
 char *time_string(time_t *t) {
@@ -48,17 +59,17 @@ char *time_string(time_t *t) {
 }
 
 static void uTest_header_report(void) {
-  printf("\n");
-  printf("------------------------------------------\n");
-  printf("        uTest Unit Test Framework         \n");
-  printf("------------------------------------------\n");
+  uTEST_PRINT("\n");
+  uTEST_PRINT("%s\n", line_brkO);
+  uTEST_PRINT("%*s\n", 34, "\u00B5Test Unit Test \u338cramework");
+  uTEST_PRINT("%s\n", line_brkI);
 }
 
 static void uTest_footer_report(void) {
   printf("\n");
-  printf("------------------------------------------\n");
-  printf("                Test Report               \n");
-  printf("------------------------------------------\n");
+  uTEST_PRINT("%s\n", line_brkI);
+  uTEST_PRINT("%*s\n", 27, "Test Summary");
+  uTEST_PRINT("%s\n", line_brkO);
 }
 
 uTest_t uTst_g = { 0 };
@@ -95,9 +106,9 @@ uint32_t uTest_end(void) {
   uTest_footer_report();
   uTEST_PRINT("Start Time: %s\n", time_string(&uTst_g.u64_start_Time));
   uTEST_PRINT("End Time:   %s\n", time_string(&uTst_g.u64_stop_Time));
-  uTEST_PRINT("Executed:  %3d \n", uTst_g.u32_uTestTCases);
-  uTEST_PRINT("Sucessful: %3d \n", tst_success);
-  uTEST_PRINT("Test Result: %s\n\n", (uTst_g.u32_uTestTCases == tst_success) ? "PASS" : "FAIL");
+  uTEST_PRINT("Executed:  %3d %s\n", uTst_g.u32_uTestTCases, pass_mark);
+  uTEST_PRINT("Sucessful: %3d %s\n", tst_success, pass_mark);
+  uTEST_PRINT("Test Result: %s\n\n", (uTst_g.u32_uTestTCases == tst_success) ? pass_text : fail_text);
 
   return uTst_g.u32_uTestTFails;
 }

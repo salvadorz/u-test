@@ -98,7 +98,7 @@ extern "C" {
 #define TST_FRM_LN_BRKR_I TST_FRMT_BOLD_T TST_FRMT_BLINKL TST_FRMT_F_LCYAN TST_STR_BRKR
 // clang-format on
 
-    #ifdef __cplusplus
+#ifdef __cplusplus
 }
 #endif
 
