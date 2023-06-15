@@ -169,6 +169,6 @@ void uTest_assert_expected_val(int32_t const expected, int32_t const actual, cha
     ++uTst_g.u32_uTestCFails;
 
     // @TODO Cancel current section
-    return // for now
+    uTST_ABORT() // for now
   }
 }

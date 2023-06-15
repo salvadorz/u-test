@@ -50,6 +50,8 @@ extern "C" {
 #define uTEST_ASSERT_EQUAL_VAL(expected, actual, line, message) \
   uTest_assert_expected_val((expected), (actual), (message), (line))
 
+#define uTST_ABORT() return
+
 #if !(uTST_SET_ENV_TEST_CFG)
   #undef uTST_SET_ENV_TEST_CFG
 #endif
