@@ -42,15 +42,21 @@ extern "C" {
 #include "uTest_datatypes.h"
 
 /**
- * \brief    Initializes the tTest structure
+ * \brief    Initialize the uTest structure
  * \param    tst structure to initialize
  * \param    filename to Start testing
- * \return   0 if sucees, 1 otherwise
+ * \return   0 if success, 1 otherwise
  * \todo
  */
-uint8_t uTest_init(uTest_handle_t tst, char const *filename);
+uT_Rtn_t uTest_init(uTest_handle_t tst, char const *filename);
 
-
+/**
+* \brief    Closes uTest after all tests fn were run and ready to show the report
+* \param    tst - uTest structure to obtain the results
+* \return   Returns number of failures detected, 0 if everything no errors
+* \todo
+*/
+uint32_t uTest_end(uTest_handle_t tst);
 
 #ifdef __cplusplus
 }
