@@ -35,6 +35,15 @@
 #include <string.h> // memset
 #include <time.h>   // time
 
+#define DATE_TIME_STR_LEN 64
+
+char date_time[DATE_TIME_STR_LEN];
+
+char *time_string(time_t *t) {
+  strftime(date_time, DATE_TIME_STR_LEN, "%d/%m/%y-%H:%M:%S %z", localtime(t));
+  return date_time;
+}
+
 uint8_t uTest_execute(uTest_handle_t tst, uTest_Module_t *tst_mod) {
   uTest_Status_t status;
 
