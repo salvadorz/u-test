@@ -77,6 +77,22 @@ uint32_t uTest_end(void);
  */
 uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char const *msg);
 
+/**
+ * \brief    Function to set any (global) variables or any environment setup prior to call
+ *            the section test (fn) under test
+ * \return   void
+ * \todo
+ */
+void uTest_pre_run();
+
+/**
+ * \brief    Function to clear or set any (global) variables or any environment setup after call
+ *            the section test (fn) under test
+ * \return   void
+ * \todo
+ */
+void uTest_post_run();
+
 #ifdef __cplusplus
 }
 #endif
