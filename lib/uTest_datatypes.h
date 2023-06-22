@@ -14,6 +14,7 @@ extern "C" {
 #endif
 
 // Includes
+#include <time.h>
 #ifndef UTILS_COMMON_H_
   #include <stdint.h>
 #else
@@ -31,8 +32,8 @@ typedef struct uTest_s {
   uint32_t    u32_uTestTFails; // Test Fn Total Section Failed Counter
   uint32_t    u32_uTestCCases; // Assertions expected in Current Section Counter
   uint32_t    u32_uTestCFails; // Assertions Failed in Current Section Counter
-  __time_t    u64_start_Time;  // Init time-stamp
-  __time_t    u64_stop_Time;   // close time-stamp
+  time_t      u64_start_Time;  // Init time-stamp
+  time_t      u64_stop_Time;   // close time-stamp
 } uTest_t;
 
 typedef uint8_t uT_Rtn_t;

@@ -38,7 +38,6 @@ extern "C" {
 #endif
 
 // Includes
-#include "uTest_common.h"
 #include "uTest_datatypes.h"
 #include "uTest_defines.h"
 
