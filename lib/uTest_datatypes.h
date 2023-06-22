@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 // Includes
-#ifndef STD_LIB
+#ifndef UTILS_COMMON_H_
   #include <stdint.h>
 #else
   #include "utils_common.h"
