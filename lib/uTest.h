@@ -56,7 +56,8 @@ extern "C" {
  * \return   OK if success, NOT_OK otherwise
  * \todo
  */
-#define uTEST_INIT() uTest_init(__FILE__)
+#define uTEST_INIT(file) uTest_init(file)
+#define uTEST_START()    uTest_init(__FILE__)
 
 /**
  * \brief    Provides the Test Summary and closes the uTest File_UT name
@@ -65,9 +66,33 @@ extern "C" {
  */
 #define uTEST_END() uTest_end()
 
+/** Macros for Handle uTEST Section Addition*/
+#ifndef uTEST_ADD
+  #define uTEST_ADD_FN(...)                 uTEST_RUN_FN(__VA_ARGS__, __LINE__, discard)
+  #define uTEST_ADD_MSG(...)                uTEST_RUN_MSG(__VA_ARGS__, __LINE__, discard)
+  #define uTEST_RUN_FN(fn, line, msg, ...)  uTest_run(fn, #fn, line, NULL)
+  #define uTEST_RUN_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
+#endif
+
+#define TEST_ASSERT_EQUAL(tst)                  uTEST_ASSERT_EQUAL((bool)(tst), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_VAL(expected, actual) uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_FLOAT(expected, actual) \
+  uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, NULL)
+
+#define TEST_ASSERT_EQUAL_MSG(tst, msg) uTEST_ASSERT_EQUAL((bool)(tst), __LINE__, msg)
+#define TEST_ASSERT_EQUAL_VAL_MSG(expected, actual, msg) \
+  uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, msg)
+#define TEST_ASSERT_EQUAL_FLOAT_MSG(expected, actual, msg) \
+  uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, msg)
+
+#define uTEST_ASSERT_EQUAL(tst, line, message) uTest_assert_expected_val((bool)(tst), (message), (line))
+#define uTEST_ASSERT_EQUAL_VAL(expected, actual, line, message) \
+  uTest_assert_expected_int_val((expected), (actual), (message), (line))
+#define uTEST_ASSERT_EQUAL_FLOAT(expected, actual, line, message) \
+  uTest_assert_expected_float_val((expected), (actual), (message), (line))
+
 /**
  * \brief    Initialize the uTest structure
- * \param    tst structure to initialize
  * \param    filename to Start testing
  * \return   0 if success, 1 otherwise
  * \todo
@@ -76,7 +101,6 @@ uT_Rtn_t uTest_init(char const *filename);
 
 /**
  * \brief    Closes uTest after all tests fn were run and ready to show the report
- * \param    tst - uTest structure to obtain the results
  * \return   Returns number of failures detected, 0 if everything no errors
  * \todo
  */
@@ -95,6 +119,16 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
 
 /**
  * \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
+ * \param    tst - true if was OK, false otherwise
+ * \param    msg - If a msg is provided will be printed if the comparison fails
+ * \param    line - prints the line number where the assertion failed.
+ * \return   NONE
+ * \todo     Cancel current section in progress
+ */
+void uTest_assert_expected_val(_Bool const tst, char const *msg, uint32_t line);
+
+/**
+ * \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
  * \param    expected - value to compare
  * \param    actual - value provided from the test
  * \param    msg - If a msg is provided will be printed if the comparison fails
@@ -102,7 +136,20 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
  * \return   NONE
  * \todo     Cancel current section in progress
  */
-void uTest_assert_expected_val(int32_t const expected, int32_t const actual, char const *msg, uint32_t line);
+void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual, char const *msg,
+                                   uint32_t line);
+
+/**
+ * \brief    Makes a comparison and evaluates if success or fail in the test. If fails prints the error
+ * \param    expected - value to compare
+ * \param    actual - value provided from the test
+ * \param    msg - If a msg is provided will be printed if the comparison fails
+ * \param    line - prints the line number where the assertion failed.
+ * \return   NONE
+ * \todo     Cancel current section in progress
+ */
+void uTest_assert_expected_float_val(float const expected, float const actual, char const *msg,
+                                     uint32_t line);
 
 /**
  * \brief    Function to set any (global) variables or any environment setup prior to call
