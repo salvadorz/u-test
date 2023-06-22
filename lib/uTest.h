@@ -73,7 +73,7 @@ extern "C" {
   #define uTEST_RUN_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
 #endif
 
-#define TEST_ASSERT_EQUAL(tst)                  uTEST_ASSERT_EQUAL((bool)(tst), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL(expected, actual) uTEST_ASSERT_EQUAL((bool)((expected) == (actual)), __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_VAL(expected, actual) uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_FLOAT(expected, actual) \
   uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, NULL)
