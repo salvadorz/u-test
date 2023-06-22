@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2023 by Salvador Z                                            *
  *                                                                             *
- * This file is part of Project                                                *
+ * This file is part of uTest                                                  *
  *                                                                             *
  *   Permission is hereby granted, free of charge, to any person obtaining a   *
  *   copy of this software and associated documentation files (the Software)   *
@@ -50,11 +50,11 @@ const char brckt_nak[] = TST_FRMT_F_YLLW "[" TST_FRMT_F_RED TST_STR_NACK TST_FRM
 const char line_brkO[] = TST_FRM_LN_BRKR_O TST_FRMT_RESETN;
 const char line_brkI[] = TST_FRM_LN_BRKR_I TST_FRMT_RESETN;
 
-char date_time[DATE_TIME_STR_LEN];
+char str_date_time[DATE_TIME_STR_LEN];
 
 char *time_string(time_t *t) {
-  strftime(date_time, DATE_TIME_STR_LEN, "%d/%m/%y-%H:%M:%S %z", localtime(t));
-  return date_time;
+  strftime(str_date_time, DATE_TIME_STR_LEN, "%d/%m/%y-%H:%M:%S %z", localtime(t));
+  return str_date_time;
 }
 
 static void uTest_header_report(void) {
@@ -65,7 +65,7 @@ static void uTest_header_report(void) {
 }
 
 static void uTest_footer_report(void) {
-  printf("\n");
+  uTEST_PRINT("\n");
   uTEST_PRINT("%s\n", line_brkI);
   uTEST_PRINT("%*s\n", 27, "Test Summary");
   uTEST_PRINT("%s\n", line_brkO);
@@ -153,13 +153,54 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
   return exec_ok;
 }
 
-void uTest_assert_expected_val(int32_t const expected, int32_t const actual, char const *msg, uint32_t line) {
+void uTest_assert_expected_val(bool const test, char const *msg, uint32_t line) {
+  ++uTst_g.u32_uTestCCases;
+
+  if (false == test) {
+    // Print report
+    uTest_results(uTst_g.str_uTestFile, line, true);
+
+    if (NULL != msg) {
+      uTEST_PRINT("%s \n", msg);
+    } else {
+      uTEST_PRINT("\n");
+    }
+    ++uTst_g.u32_uTestCFails;
+
+    // @TODO Cancel current section
+    uTST_ABORT(); // for now
+  }
+}
+
+void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual, char const *msg,
+                                   uint32_t line) {
   ++uTst_g.u32_uTestCCases;
 
   if (expected != actual) {
     // Print report
     uTest_results(uTst_g.str_uTestFile, line, true);
     uTEST_PRINT(" - Expected %d was %d.", expected, actual);
+
+    if (NULL != msg) {
+      uTEST_PRINT("%s \n", msg);
+    } else {
+      uTEST_PRINT("\n");
+    }
+    ++uTst_g.u32_uTestCFails;
+
+    // @TODO Cancel current section
+    uTST_ABORT(); // for now
+  }
+}
+
+void uTest_assert_expected_float_val(float const expected, float const actual, char const *msg,
+                                     uint32_t line) {
+  ++uTst_g.u32_uTestCCases;
+
+  if (expected != actual) {
+    // Print report
+    uTest_results(uTst_g.str_uTestFile, line, true);
+    uTEST_PRINT(" - Expected %f was %f.", expected, actual);
 
     if (NULL != msg) {
       uTEST_PRINT("%s \n", msg);
