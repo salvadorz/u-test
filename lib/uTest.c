@@ -145,12 +145,16 @@ uT_Rtn_t uTest_run(uTest_fn_ptr fnTst, char const *fnName, uint32_t line, char c
       uTst_g.str_uTestFnDesc = msg;
     }
 
-    uTEST_PRE_RUN();
-    fnTst();
-    uTEST_POST_RUN();
+    if (uTST_CHECK()) {
+      uTEST_PRE_RUN();
+      fnTst();
+    }
+    if (uTST_CHECK()) {
+      uTEST_POST_RUN();
+    }
 
     uTest_check();
-    // @TODO Conclude Test to see if any failure
+
   } else {
     exec_ok = uTEST_NOT_OK;
   }
@@ -171,8 +175,7 @@ void uTest_assert_expected_val(bool const test, char const *msg, uint32_t line) 
     }
     ++uTst_g.u32_uTestCFails;
 
-    // @TODO Cancel current section
-    uTST_ABORT(); // for now
+    uTST_ABORT();
   }
 }
 
@@ -192,8 +195,7 @@ void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual,
     }
     ++uTst_g.u32_uTestCFails;
 
-    // @TODO Cancel current section
-    uTST_ABORT(); // for now
+    uTST_ABORT();
   }
 }
 
@@ -213,7 +215,6 @@ void uTest_assert_expected_float_val(float const expected, float const actual, c
     }
     ++uTst_g.u32_uTestCFails;
 
-    // @TODO Cancel current section
-    uTST_ABORT(); // for now
+    uTST_ABORT();
   }
 }

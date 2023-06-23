@@ -14,6 +14,7 @@ extern "C" {
 #endif
 
 // Includes
+#include <setjmp.h> /* jmp_buf*/
 #include <time.h>
 #ifndef UTILS_COMMON_H_
   #include <stdint.h>
@@ -34,6 +35,7 @@ typedef struct uTest_s {
   uint32_t    u32_uTestCFails; // Assertions Failed in Current Section Counter
   time_t      u64_start_Time;  // Init time-stamp
   time_t      u64_stop_Time;   // close time-stamp
+  jmp_buf     jmp_uTestJmpBuf; // Jump Buffer for Long Jump
 } uTest_t;
 
 typedef uint8_t uT_Rtn_t;

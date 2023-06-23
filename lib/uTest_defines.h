@@ -18,30 +18,41 @@ extern "C" {
 
 /** Utils-Test Macro configuration to enable/disable features */
 #define uTST_FORMAT_COLOR_CFG (ENABLE)  // ENABLE/DISABLE the COLOR OUTPUT FORMAT
+#define uTST_SET_LONG_JMP_CFG (ENABLE)  // ENABLE/DISABLE the LONG JUMP for TEST FAIL
 #define uTST_SET_ENV_TEST_CFG (DISABLE) // ENABLE/DISABLE the PRE and POST RUN functions to set the env test
 
-// Internal macros
-#define uTST_ABORT() return
-
-#define uTST_RETURN_IF_FAIL_         \
-  do {                               \
-    if (utils_test.u32_TstCFailed) { \
-      uTST_ABORT();                  \
-    }                                \
-  } while (0)
-
-#define uTEST_ASSERT_EXPECTED(x, y)                  \
-  do {                                               \
-    if (x != y) uTest_assert_fail(#x, #y, __LINE__); \
-  } while (0)
-
 #if !(uTST_SET_ENV_TEST_CFG)
+  #undef uTST_SET_ENV_TEST_CFG
+#endif
+
+#if !(uTST_SET_LONG_JMP_CFG)
   #undef uTST_SET_ENV_TEST_CFG
 #endif
 
 #if !(uTST_FORMAT_COLOR_CFG)
   #undef uTST_FORMAT_COLOR_CFG
 #endif
+
+// Internal macros
+#ifdef uTST_SET_LONG_JMP_CFG
+  #define uTST_CHECK() (setjmp(uTst_g.jmp_uTestJmpBuf) == 0)
+  #define uTST_ABORT() longjmp(uTst_g.jmp_uTestJmpBuf, 1)
+#else
+  #define uTST_CHECK() (1)
+  #define uTST_ABORT() return
+#endif
+
+#define uTST_RETURN_IF_FAIL_     \
+  do {                           \
+    if (uTst_g.u32_TstCFailed) { \
+      uTST_ABORT();              \
+    }                            \
+  } while (0)
+
+#define uTEST_ASSERT_EXPECTED(x, y)                  \
+  do {                                               \
+    if (x != y) uTest_assert_fail(#x, #y, __LINE__); \
+  } while (0)
 
 /*****************************************************************************************************
  * Definition of TEST STRING MACROs
