@@ -50,6 +50,10 @@ const char brckt_nak[] = TST_FRMT_F_YLLW "[" TST_FRMT_F_RED TST_STR_NACK TST_FRM
 const char line_brkO[] = TST_FRM_LN_BRKR_O TST_FRMT_RESETN;
 const char line_brkI[] = TST_FRM_LN_BRKR_I TST_FRMT_RESETN;
 
+const char cyan_text[] = TST_FRMT_F_LCYAN;
+const char ital_text[] = TST_FRMT_ITALIC;
+const char rstf_text[] = TST_FRMT_RESETN;
+
 char str_date_time[DATE_TIME_STR_LEN];
 
 char *time_string(time_t *t) {
@@ -122,8 +126,8 @@ void uTest_check(void) {
   }
   uint32_t const cTestPassed = uTst_g.u32_uTestCCases - uTst_g.u32_uTestCFails;
 
-  uTEST_PRINT("- %s total:%3d pass:%3d - Test Name: %s\n", any_fail ? brckt_nak : dbrckt_ok,
-              uTst_g.u32_uTestCCases, cTestPassed, uTst_g.str_uTestFnDesc);
+  uTEST_PRINT("- %s total:%3d pass:%3d - Test Name: '%s%s%s'\n", any_fail ? brckt_nak : dbrckt_ok,
+              uTst_g.u32_uTestCCases, cTestPassed, cyan_text, uTst_g.str_uTestFnDesc, rstf_text);
   uTst_g.u32_uTestCCases = 0;
   uTst_g.u32_uTestCFails = 0;
   uTst_g.str_uTestFnDesc = NULL;
@@ -161,7 +165,7 @@ void uTest_assert_expected_val(bool const test, char const *msg, uint32_t line) 
     uTest_results(uTst_g.str_uTestFile, line, true);
 
     if (NULL != msg) {
-      uTEST_PRINT("%s \n", msg);
+      uTEST_PRINT(" -%s %s %s\n", ital_text, msg, rstf_text);
     } else {
       uTEST_PRINT("\n");
     }
@@ -182,7 +186,7 @@ void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual,
     uTEST_PRINT(" - Expected %d was %d.", expected, actual);
 
     if (NULL != msg) {
-      uTEST_PRINT("%s \n", msg);
+      uTEST_PRINT("%s %s %s\n", ital_text, msg, rstf_text);
     } else {
       uTEST_PRINT("\n");
     }
@@ -203,7 +207,7 @@ void uTest_assert_expected_float_val(float const expected, float const actual, c
     uTEST_PRINT(" - Expected %f was %f.", expected, actual);
 
     if (NULL != msg) {
-      uTEST_PRINT("%s \n", msg);
+      uTEST_PRINT("%s %s %s\n", ital_text, msg, rstf_text);
     } else {
       uTEST_PRINT("\n");
     }
