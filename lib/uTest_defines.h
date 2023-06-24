@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
 #if !(uTST_SET_LONG_JMP_CFG)
-  #undef uTST_SET_ENV_TEST_CFG
+  #undef uTST_SET_LONG_JMP_CFG
 #endif
 
 #if !(uTST_FORMAT_COLOR_CFG)
