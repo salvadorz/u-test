@@ -54,6 +54,17 @@ extern "C" {
     if (x != y) uTest_assert_fail(#x, #y, __LINE__); \
   } while (0)
 
+#ifndef uTEST_ADD
+  #define uTEST_RUN_FN(fn, line, msg, ...)  uTest_run(fn, #fn, line, NULL)
+  #define uTEST_RUN_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
+#endif
+
+#define uTEST_ASSERT_EQUAL(tst, line, message) uTest_assert_expected_val((bool)(tst), (message), (line))
+#define uTEST_ASSERT_EQUAL_VAL(expected, actual, line, message) \
+  uTest_assert_expected_int_val((expected), (actual), (message), (line))
+#define uTEST_ASSERT_EQUAL_FLOAT(expected, actual, line, message) \
+  uTest_assert_expected_float_val((expected), (actual), (message), (line))
+
 /*****************************************************************************************************
  * Definition of TEST STRING MACROs
  *****************************************************************************************************/

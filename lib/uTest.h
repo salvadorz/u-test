@@ -65,31 +65,23 @@ extern "C" {
  */
 #define uTEST_END() uTest_end()
 
+// clang-format off
 /** Macros for Handle uTEST Section Addition*/
 #ifndef uTEST_ADD
-  #define uTEST_ADD_FN(...)                 uTEST_RUN_FN(__VA_ARGS__, __LINE__, discard)
-  #define uTEST_ADD_MSG(...)                uTEST_RUN_MSG(__VA_ARGS__, __LINE__, discard)
-  #define uTEST_RUN_FN(fn, line, msg, ...)  uTest_run(fn, #fn, line, NULL)
-  #define uTEST_RUN_MSG(fn, msg, line, ...) uTest_run(fn, #fn, line, msg)
+  #define uTEST_ADD_FN(...)                                uTEST_RUN_FN(__VA_ARGS__, __LINE__, discard)
+  #define uTEST_ADD_MSG(...)                               uTEST_RUN_MSG(__VA_ARGS__, __LINE__, discard)
 #endif
 
-#define TEST_ASSERT_EQUAL(expected, actual)     uTEST_ASSERT_EQUAL((bool)((expected) == (actual)), __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_VAL(expected, actual) uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_FLOAT(expected, actual) \
-  uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, NULL)
+#define TEST_ASSERT_FAIL(msg)                              uTEST_ASSERT_EQUAL((false), __LINE__, msg)
+#define TEST_ASSERT_EQUAL(expected, actual)                uTEST_ASSERT_EQUAL(((expected) == (actual)), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_VAL(expected, actual)            uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_FLOAT(expected, actual)          uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, NULL)
 
-#define TEST_ASSERT_EQUAL_MSG(expected, actual, msg) \
-  uTEST_ASSERT_EQUAL((bool)((expected) == (actual)), __LINE__, msg)
-#define TEST_ASSERT_EQUAL_VAL_MSG(expected, actual, msg) \
-  uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, msg)
-#define TEST_ASSERT_EQUAL_FLOAT_MSG(expected, actual, msg) \
-  uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, msg)
+#define TEST_ASSERT_EQUAL_MSG(expected, actual, msg)       uTEST_ASSERT_EQUAL(((expected) == (actual)), __LINE__, msg)
+#define TEST_ASSERT_EQUAL_VAL_MSG(expected, actual, msg)   uTEST_ASSERT_EQUAL_VAL((expected), (actual), __LINE__, msg)
+#define TEST_ASSERT_EQUAL_FLOAT_MSG(expected, actual, msg) uTEST_ASSERT_EQUAL_FLOAT((expected), (actual), __LINE__, msg)
 
-#define uTEST_ASSERT_EQUAL(tst, line, message) uTest_assert_expected_val((bool)(tst), (message), (line))
-#define uTEST_ASSERT_EQUAL_VAL(expected, actual, line, message) \
-  uTest_assert_expected_int_val((expected), (actual), (message), (line))
-#define uTEST_ASSERT_EQUAL_FLOAT(expected, actual, line, message) \
-  uTest_assert_expected_float_val((expected), (actual), (message), (line))
+// clang-format on
 
 /**
  * \brief    Initialize the uTest structure
