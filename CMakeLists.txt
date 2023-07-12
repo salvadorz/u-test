@@ -8,7 +8,7 @@
 #*
 cmake_minimum_required(VERSION 3.0.0)
 project(uTest
-  VERSION 0.1
+  VERSION 0.120
   DESCRIPTION "Project to create a simple and easy Unit Test Framework"
   LANGUAGES C CXX ASM)
 
