@@ -32,6 +32,7 @@
 
 #include "uTest.h"
 
+#include <math.h>   // fabs
 #include <stdbool.h>
 #include <stdio.h>  // uTEST_PRINT
 #include <string.h> // memset
@@ -75,6 +76,7 @@ static void uTest_footer_report(void) {
   uTEST_PRINT("%s\n", line_brkO);
 }
 
+float   gf_EPSILON = uTEST_EPSILON;
 uTest_t uTst_g = { 0 };
 
 static void uTest_results(char const *file, uint32_t const line, bool failed) {
@@ -199,11 +201,15 @@ void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual,
   }
 }
 
+void uTest_set_epsilon(float eps) {
+  gf_EPSILON = eps;
+}
+
 void uTest_assert_expected_float_val(float const expected, float const actual, char const *msg,
                                      uint32_t line) {
   ++uTst_g.u32_uTestCCases;
 
-  if (expected != actual) {
+  if (fabs(expected - actual) > gf_EPSILON) {
     // Print report
     uTest_results(uTst_g.str_uTestFile, line, true);
     uTEST_PRINT(" - Expected %f was %f.", expected, actual);

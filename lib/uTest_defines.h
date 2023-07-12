@@ -34,6 +34,7 @@ extern "C" {
 #endif
 
 // Internal macros
+#define uTEST_EPSILON (1e-2f) // 0.01f
 #ifdef uTST_SET_LONG_JMP_CFG
   #define uTST_CHECK() (setjmp(uTst_g.jmp_uTestJmpBuf) == 0)
   #define uTST_ABORT() longjmp(uTst_g.jmp_uTestJmpBuf, 1)

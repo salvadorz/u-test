@@ -65,6 +65,12 @@ extern "C" {
  */
 #define uTEST_END() uTest_end()
 
+/**
+ * @brief   Sets the epsilon value for float comparison
+ * 
+ */
+#define uTEST_SET_EPSILON(eps) uTest_set_epsilon(eps)
+
 // clang-format off
 /** Macros for Handle uTEST Section Addition*/
 #ifndef uTEST_ADD
@@ -142,7 +148,11 @@ void uTest_assert_expected_int_val(int32_t const expected, int32_t const actual,
  */
 void uTest_assert_expected_float_val(float const expected, float const actual, char const *msg,
                                      uint32_t line);
-
+/**
+ * \brief Changess the default Epsilon value
+ * \param eps new epsilon value
+ */
+void uTest_set_epsilon(float eps);
 /**
  * \brief    Function to set any (global) variables or any environment setup prior to call
  *            the section test (fn) under test
